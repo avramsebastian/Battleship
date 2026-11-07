@@ -472,3 +472,5 @@ compile_commands.json
 stdafx.*
 *.rc
 *.ico
+
+*.lib
