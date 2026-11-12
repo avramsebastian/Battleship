@@ -1,6 +1,14 @@
 #include "pch.h"
-
-TEST(TestCaseName, TestName) {
-  EXPECT_EQ(1, 1);
-  EXPECT_TRUE(true);
-}
+#include "gtest/gtest.h"
+//#include "IGameEngine.h"
+//TEST(EngineTests, TestInitial) {
+//    auto engine = CreateGameEngine();
+//
+//    FakeUI myWindow;
+//    engine->AttachObserver(&myWindow);
+//
+//    engine->PlayerAttack(2, 3); 
+//    engine->PlayerAttack(4, 4); 
+//
+//    EXPECT_TRUE(true); 
+//}

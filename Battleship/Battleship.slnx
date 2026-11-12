@@ -3,9 +3,9 @@
     <Platform Name="x64" />
     <Platform Name="x86" />
   </Configurations>
-  <Project Path="BattleshipLogic/BattleshipLogic.vcxproj" />
-  <Project Path="BattleshipTests/BattleshipTests.vcxproj" />
-  <Project Path="BattleshipUI/BattleshipUI.vcxproj">
+  <Project Path="BattleshipLogic/BattleshipLogic.vcxproj" Id="7bd2ef63-30a3-4052-a798-3b0bc8bdba02" />
+  <Project Path="BattleshipTests/BattleshipTests.vcxproj" Id="ddd31a4a-0c24-4bb9-a424-ef8799c0059e" />
+  <Project Path="BattleshipUI/BattleshipUI.vcxproj" Id="244e8adb-ca5a-4f3f-9f73-10cef8cb1d2d">
     <Platform Project="x64" />
   </Project>
 </Solution>

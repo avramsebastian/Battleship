@@ -144,10 +144,25 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="BattleshipAPI.h" />
+    <ClInclude Include="Board.h" />
     <ClInclude Include="GameEngine.h" />
+    <ClInclude Include="GameEnums.h" />
+    <ClInclude Include="GameRules.h" />
+    <ClInclude Include="GameTypes.h" />
+    <ClInclude Include="IAttackStrategy.h" />
+    <ClInclude Include="IGameEngine.h" />
+    <ClInclude Include="IGameObserver.h" />
+    <ClInclude Include="IShipPlacer.h" />
+    <ClInclude Include="RandomAttackStrategy.h" />
+    <ClInclude Include="RandomShipPlacer.h" />
+    <ClInclude Include="Ship.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Board.cpp" />
     <ClCompile Include="GameEngine.cpp" />
+    <ClCompile Include="RandomAttackStrategy.cpp" />
+    <ClCompile Include="RandomShipPlacer.cpp" />
+    <ClCompile Include="Ship.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
