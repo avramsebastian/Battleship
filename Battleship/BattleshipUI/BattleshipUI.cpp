@@ -20,7 +20,7 @@ namespace
 
 BattleshipUI::BattleshipUI(QWidget* parent)
     : QMainWindow(parent)
-    , m_engine(CreateGameEngine())
+    , m_engine(IGameEngine::Create())
 {
     ui.setupUi(this);
 

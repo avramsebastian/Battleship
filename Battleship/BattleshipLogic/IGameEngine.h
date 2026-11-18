@@ -8,9 +8,18 @@
 #include <optional>
 #include <vector>
 
+using IGameEnginePtr = std::shared_ptr<class IGameEngine>;
+using IShipPlacerPtr = std::unique_ptr<IShipPlacer>;
+using IAttackStrategyPtr = std::unique_ptr<IAttackStrategy>;
+
 class IGameEngine
 {
 public:
+    static BATTLESHIP_API IGameEnginePtr Create();
+    static BATTLESHIP_API IGameEnginePtr Create(
+        IShipPlacerPtr shipPlacer,
+        IAttackStrategyPtr aiStrategy);
+
     virtual ~IGameEngine() = default;
 
     virtual void AddObserver(IGameObserver* observer) = 0;
@@ -27,12 +36,3 @@ public:
     virtual std::vector<ShipType> GetFleet() const = 0;
     virtual GameState GetGameState() const = 0;
 };
-
-using IGameEnginePtr = std::shared_ptr<IGameEngine>;
-using IShipPlacerPtr = std::unique_ptr<IShipPlacer>;
-using IAttackStrategyPtr = std::unique_ptr<IAttackStrategy>;
-
-BATTLESHIP_API IGameEnginePtr CreateGameEngine();
-BATTLESHIP_API IGameEnginePtr CreateGameEngine(
-    IShipPlacerPtr shipPlacer,
-    IAttackStrategyPtr aiStrategy);

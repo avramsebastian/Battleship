@@ -17,17 +17,18 @@ using ::testing::StrictMock;
 class FixedShipPlacer : public IShipPlacer
 {
 public:
-    ShipPlacement ChoosePlacement(ShipType shipType) override
+    void ChoosePlacement(ShipType shipType, uint16_t& row, uint16_t& col, Orientation& orientation) override
     {
+        col = 0;
+        orientation = Orientation::Horizontal;
         switch (shipType)
         {
-        case ShipType::Carrier:    return { {0, 0}, Orientation::Horizontal }; // (0,0)..(0,4)
-        case ShipType::Battleship: return { {2, 0}, Orientation::Horizontal }; // (2,0)..(2,3)
-        case ShipType::Cruiser:    return { {4, 0}, Orientation::Horizontal }; // (4,0)..(4,2)
-        case ShipType::Submarine:  return { {6, 0}, Orientation::Horizontal }; // (6,0)..(6,2)
-        case ShipType::Destroyer:  return { {8, 0}, Orientation::Horizontal }; // (8,0)..(8,1)
+        case ShipType::Carrier:    row = 0; break; // (0,0)..(0,4)
+        case ShipType::Battleship: row = 2; break; // (2,0)..(2,3)
+        case ShipType::Cruiser:    row = 4; break; // (4,0)..(4,2)
+        case ShipType::Submarine:  row = 6; break; // (6,0)..(6,2)
+        case ShipType::Destroyer:  row = 8; break; // (8,0)..(8,1)
         }
-        return { {0, 0}, Orientation::Horizontal };
     }
 };
 
@@ -41,9 +42,10 @@ public:
         m_nextCol = 0;
     }
 
-    CellPosition ChooseTarget() override
+    void ChooseTarget(uint16_t& row, uint16_t& col) override
     {
-        CellPosition target{ m_nextRow, m_nextCol };
+        row = m_nextRow;
+        col = m_nextCol;
         m_nextCol++;
         if (m_nextCol >= kBoardSize)
         {
@@ -54,7 +56,6 @@ public:
                 m_nextRow = 1;
             }
         }
-        return target;
     }
 
 private:
@@ -76,7 +77,7 @@ public:
 // Helper function to create engine with deterministic dependencies.
 IGameEnginePtr CreateTestEngine()
 {
-    return CreateGameEngine(std::make_unique<FixedShipPlacer>(), std::make_unique<FixedAttackStrategy>());
+    return IGameEngine::Create(std::make_unique<FixedShipPlacer>(), std::make_unique<FixedAttackStrategy>());
 }
 
 // ============================================================================

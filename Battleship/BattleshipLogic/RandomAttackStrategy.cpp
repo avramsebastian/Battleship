@@ -20,13 +20,13 @@ void RandomAttackStrategy::Reset()
     }
 }
 
-CellPosition RandomAttackStrategy::ChooseTarget()
+void RandomAttackStrategy::ChooseTarget(uint16_t& row, uint16_t& col)
 {
     std::uniform_int_distribution<size_t> pickIndex(0, m_remainingTargets.size() - 1);
     const size_t index = pickIndex(m_randomEngine);
 
-    const CellPosition target = m_remainingTargets[index];
+    row = m_remainingTargets[index].row;
+    col = m_remainingTargets[index].col;
     std::swap(m_remainingTargets[index], m_remainingTargets.back());
     m_remainingTargets.pop_back();
-    return target;
 }

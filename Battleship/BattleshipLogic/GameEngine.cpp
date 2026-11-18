@@ -45,7 +45,10 @@ AttackResult GameEngine::AttackCell(uint16_t row, uint16_t col)
     const AttackResult result = ExecuteAttack(Side::Human, m_aiBoard, { row, col });
     if (m_state == GameState::AITurn)
     {
-        ExecuteAttack(Side::AI, m_humanBoard, m_aiStrategy->ChooseTarget());
+        uint16_t targetRow = 0;
+        uint16_t targetCol = 0;
+        m_aiStrategy->ChooseTarget(targetRow, targetCol);
+        ExecuteAttack(Side::AI, m_humanBoard, { targetRow, targetCol });
     }
     return result;
 }
@@ -96,9 +99,13 @@ void GameEngine::PlaceFleet(Board& board)
 {
     for (const ShipType shipType : kFleet)
     {
-        while (!board.PlaceShip(shipType, m_shipPlacer->ChoosePlacement(shipType)))
+        uint16_t row = 0;
+        uint16_t col = 0;
+        Orientation orientation = Orientation::Horizontal;
+        do
         {
-        }
+            m_shipPlacer->ChoosePlacement(shipType, row, col, orientation);
+        } while (!board.PlaceShip(shipType, { { row, col }, orientation }));
     }
 }
 
@@ -141,14 +148,12 @@ void GameEngine::NotifyObservers(const std::function<void(IGameObserver&)>& noti
     }
 }
 
-IGameEnginePtr CreateGameEngine()
+IGameEnginePtr IGameEngine::Create()
 {
-    return CreateGameEngine(std::make_unique<RandomShipPlacer>(), std::make_unique<RandomAttackStrategy>());
+    return Create(std::make_unique<RandomShipPlacer>(), std::make_unique<RandomAttackStrategy>());
 }
 
-IGameEnginePtr CreateGameEngine(
-    IShipPlacerPtr shipPlacer,
-    IAttackStrategyPtr aiStrategy)
+IGameEnginePtr IGameEngine::Create(IShipPlacerPtr shipPlacer, IAttackStrategyPtr aiStrategy)
 {
     return std::make_shared<GameEngine>(std::move(shipPlacer), std::move(aiStrategy));
 }
